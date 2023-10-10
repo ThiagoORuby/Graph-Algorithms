@@ -1,0 +1,5 @@
+-h                  : show the help
+-o <filename>       : redirect the output to the specified file
+-f <filename>       : specify the file that contains the input graph
+-s                  : show the solution (MST)
+-i                  : initial vertex (default: 1)
