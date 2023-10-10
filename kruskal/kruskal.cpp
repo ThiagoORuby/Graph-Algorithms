@@ -1,8 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <fstream>
-#include <string>
-#include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -48,7 +44,7 @@ class UnionFind
             return parent[x];
         }
 
-        void unionSet(int x, int y)
+        void unionSets(int x, int y)
         {
             int fx = find(x);
             int fy = find(y);
@@ -86,7 +82,7 @@ vector<Edge> kruskal(Graph g)
         if (uf.find(e.u) != uf.find(e.v))
         {
             T.push_back(e);
-            uf.unionSet(e.u, e.v);
+            uf.unionSets(e.u, e.v);
         }
     }
 

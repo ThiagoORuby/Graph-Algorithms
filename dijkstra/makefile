@@ -1,13 +1,7 @@
-CXX = g++
-CXXFLAGS = -Wall
-SRCS = dijkstra.cpp
-OBJS = $(SRCS:.cpp=.o)
-EXEC = dijkstra
+all: compile
 
-all: $(EXEC)
-
-$(EXEC): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+compile:
+	g++ -std=c++11 -Wall dijkstra.cpp -o dijkstra.bin
 
 clean:
-	rm -f $(OBJS) $(EXEC)
+	rm -f dijkstra.bin

@@ -1,10 +1,4 @@
-#include <iostream>
-#include <map>
-#include <vector>
-#include <queue>
-#include <climits>
-#include <fstream>
-#include <string>
+#include <bits/stdc++.h>
 
 using namespace std;
 
