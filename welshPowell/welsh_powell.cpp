@@ -5,23 +5,23 @@ using namespace std;
 
 struct Graph{
 
-        int n;
-        map<int, vector<int>> adj_list;
+    int n;
+    map<int, vector<int>> adj_list;
 
-        Graph(int n) : n(n){}
+    Graph(int n) : n(n){}
 
-        int get_n(){return n;}
+    int get_n(){return n;}
 
-        void add_edge(int u, int v)
-        {
-            adj_list[u].push_back(v);
-            adj_list[v].push_back(u);
-        }
+    void add_edge(int u, int v)
+    {
+        adj_list[u].push_back(v);
+        adj_list[v].push_back(u);
+    }
 
-        vector<int> N(int vertex)
-        {
-            return adj_list[vertex];
-        }
+    vector<int> N(int vertex)
+    {
+        return adj_list[vertex];
+    }
 };
 
 bool compareDegrees(pair<int, int> a, pair<int, int> b)
