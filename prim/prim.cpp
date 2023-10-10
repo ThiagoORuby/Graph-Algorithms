@@ -9,11 +9,13 @@ class Graph{
 
     private:
         int n;
-        map<int, edges> adj_list;
+        vector<edges> adj_list;
     
     public:
 
-        Graph(int n) : n(n){}
+        Graph(int n) : n(n){
+            adj_list.resize(n);
+        }
 
         int get_n(){return n;}
 
@@ -62,7 +64,6 @@ pair<int, vector<int>> prim(Graph g, int v0)
     }
 
     for(int i = 1; i < g.get_n(); i++) cost += dist[i];
-    //cout << "(" << pre[i] << "," << i << ")" << " ";
     
     return make_pair(cost, pre);
 }

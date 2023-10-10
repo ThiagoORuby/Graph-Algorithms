@@ -9,11 +9,13 @@ class Graph{
 
     private:
         int n;
-        map<int, edges> adj_list;
+        vector<edges> adj_list;
     
     public:
 
-        Graph(int n) : n(n){}
+        Graph(int n) : n(n){
+            adj_list.resize(n);
+        }
 
         int get_n(){return n;}
 
