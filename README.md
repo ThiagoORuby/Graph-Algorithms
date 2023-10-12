@@ -1,4 +1,4 @@
-# Projeto - Teoria de Grafos
+# Projeto - Teoria dos Grafos
 
 Implementação de algoritmos em grafos para composição parcial de nota na disciplina Teoria dos Grafos.
 
