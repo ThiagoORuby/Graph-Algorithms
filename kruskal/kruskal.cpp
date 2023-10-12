@@ -21,52 +21,48 @@ struct Graph{
     }
 };
 
-class UnionFind
+struct UnionFind
 {
-    private:
-        vector<int> parent;
-        vector<int> rank;
 
-    public:
+    vector<int> parent;
+    vector<int> rank;
 
-        UnionFind(int n){
-            parent.resize(n);
-            rank.resize(n, 0);
+    UnionFind(int n){
+        parent.resize(n + 1);
+        rank.resize(n + 1, 0);
 
-            for(int i = 1; i < n; i++) parent[i] = i;
-        }
+        for(int i = 1; i <= n; i++) parent[i] = i;
+    }
 
-        int find(int x)
+    int find(int x)
+    {
+        if (parent[x] != x)
+            parent[x] = find(parent[x]);
+        
+        return parent[x];
+    }
+
+    void unionSets(int x, int y)
+    {
+        int fx = find(x);
+        int fy = find(y);
+
+        if (rank[fx] >= rank[fy])
         {
-            if (parent[x] != x)
-                parent[x] = find(parent[x]);
-            
-            return parent[x];
+            parent[fy] = fx;
+            if(rank[fx] == rank[fy])
+                rank[fx]++;
         }
-
-        void unionSets(int x, int y)
+        else
         {
-            int fx = find(x);
-            int fy = find(y);
-
-            if (rank[fx] >= rank[fy])
-            {
-                parent[fy] = fx;
-                if(rank[fx] == rank[fy])
-                    rank[fx]++;
-            }
-            else
-            {
-                parent[fx] = fy;
-            }
+            parent[fx] = fy;
         }
-
+    }
 };
 
 bool compare_weights(const Edge& a, const Edge& b) {
     return a.weight < b.weight;
 }
-
 
 vector<Edge> kruskal(Graph g)
 {
@@ -133,7 +129,7 @@ int main(int argc, char const *argv[])
 
     file >> vertices >> edges;
 
-    Graph g(vertices + 1, edges);
+    Graph g(vertices, edges);
 
     for(int i = 0; i < edges; i++)
     {
@@ -141,6 +137,8 @@ int main(int argc, char const *argv[])
         file >> from >> to >> weight;
         g.add_edge(from, to, weight);
     }
+
+    file.close();
 
     vector<Edge> T = kruskal(g);
 
@@ -163,6 +161,8 @@ int main(int argc, char const *argv[])
         if(o) output << cost << endl;
         else cout << cost << endl;
     }
+
+    output.close();
 
     return 0;
 }

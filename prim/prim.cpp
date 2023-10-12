@@ -5,38 +5,33 @@ using namespace std;
 typedef pair<int,int> edge;
 typedef vector<edge> edges;
 
-class Graph{
+struct Graph{
 
-    private:
-        int n;
-        vector<edges> adj_list;
+    int n;
+    vector<edges> adj_list;
     
-    public:
+    Graph(int n) : n(n){
+        adj_list.resize(n + 1);
+    }
 
-        Graph(int n) : n(n){
-            adj_list.resize(n);
-        }
+    void add_edge(int u, int v, int weight)
+    {
+        adj_list[u].push_back(make_pair(v, weight));
+        adj_list[v].push_back(make_pair(u, weight));
+    }
 
-        int get_n(){return n;}
-
-        void add_edge(int u, int v, int weight)
-        {
-            adj_list[u].push_back(make_pair(v, weight));
-            adj_list[v].push_back(make_pair(u, weight));
-        }
-
-        edges N(int vertex)
-        {
-            return adj_list[vertex];
-        }
+    edges N(int vertex)
+    {
+        return adj_list[vertex];
+    }
 };
 
 pair<int, vector<int>> prim(Graph g, int v0)
 {
     int cost = 0;
-    vector<bool> visited(g.get_n(), false);
-    vector<int> dist(g.get_n(), INT_MAX);
-    vector<int> pre(g.get_n(), -1);
+    vector<bool> visited(g.n + 1, false);
+    vector<int> dist(g.n + 1, INT_MAX);
+    vector<int> pre(g.n + 1, -1);
 
     priority_queue<edge, edges, greater<edge>> H;
 
@@ -63,7 +58,7 @@ pair<int, vector<int>> prim(Graph g, int v0)
         }
     }
 
-    for(int i = 1; i < g.get_n(); i++) cost += dist[i];
+    for(int i = 1; i <= g.n; i++) cost += dist[i];
     
     return make_pair(cost, pre);
 }
@@ -119,7 +114,7 @@ int main(int argc, char const *argv[])
         return 1;
     }
 
-    Graph g(vertices + 1);
+    Graph g(vertices);
 
     for(int i = 0; i < edges; i++)
     {
@@ -128,14 +123,15 @@ int main(int argc, char const *argv[])
         g.add_edge(from, to, weight);
     }
 
-    result = prim(g, vertex);
+    file.close();
 
+    result = prim(g, vertex);
     cost = result.first;
     pre = result.second;
 
     if(s)
     {
-        for(int j = 1; j < pre.size(); j++)
+        for(int j = 1; j <= pre.size(); j++)
         {
             if(pre[j] > 0)
             {
@@ -150,6 +146,8 @@ int main(int argc, char const *argv[])
         if(o) output << cost;
         else cout << cost;
     }
+
+    output.close();
 
     return 0;
 }

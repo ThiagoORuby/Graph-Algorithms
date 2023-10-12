@@ -5,36 +5,31 @@ using namespace std;
 typedef pair<int,int> edge;
 typedef vector<edge> edges;
 
-class Graph{
-
-    private:
-        int n;
-        vector<edges> adj_list;
+struct Graph{
     
-    public:
+    int n;
+    vector<edges> adj_list;
 
-        Graph(int n) : n(n){
-            adj_list.resize(n);
-        }
+    Graph(int n) : n(n){
+        adj_list.resize(n + 1);
+    }
 
-        int get_n(){return n;}
+    void add_edge(int u, int v, int weight)
+    {
+        adj_list[u].push_back(make_pair(v, weight));
+        adj_list[v].push_back(make_pair(u, weight));
+    }
 
-        void add_edge(int u, int v, int weight)
-        {
-            adj_list[u].push_back(make_pair(v, weight));
-            adj_list[v].push_back(make_pair(u, weight));
-        }
-
-        edges N(int vertex)
-        {
-            return adj_list[vertex];
-        }
+    edges N(int vertex)
+    {
+        return adj_list[vertex];
+    }
 };
 
 vector<int> djikstra(Graph g, int v0)
 {
-    vector<int> dist(g.get_n(), INT_MAX);
-    vector<int> pre(g.get_n(), -1);
+    vector<int> dist(g.n + 1, INT_MAX);
+    vector<int> pre(g.n + 1, -1);
 
     priority_queue<edge, edges, greater<edge>> H;
 
@@ -112,7 +107,7 @@ int main(int argc, char const *argv[])
         return 1;
     }
 
-    Graph g(vertices + 1);
+    Graph g(vertices);
 
     for(int i = 0; i < edges; i++)
     {
@@ -121,15 +116,20 @@ int main(int argc, char const *argv[])
         g.add_edge(from, to, weight);
     }
 
+    file.close();
+
     result = djikstra(g, vertex);
 
-    for(int i = 1; i < g.get_n(); i++)
+    for(int i = 1; i <= g.n; i++)
     {
-        if(o) output << i << ":" << result[i] << " ";
-        else cout << i << ":" << result[i] << " ";
+        int dist = result[i] == INT_MAX ? -1 : result[i];
+        if(o) output << i << ":" << dist << " ";
+        else cout << i << ":" << dist << " ";
     }
 
     if(!o) cout << endl;
+
+    output.close();
 
     return 0;
 }
