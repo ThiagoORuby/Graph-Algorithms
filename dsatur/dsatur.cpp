@@ -203,7 +203,7 @@ int main(int argc, char const *argv[])
 
     if(s)
     {
-        for(int j = 1; j < color.size(); j++)
+        for(int j = 1; j < (int) color.size(); j++)
         {
             if(o) output << "v" << j << ":" << color[j] << " ";
             else cout << "v" << j << ":" << color[j] << " ";
