@@ -141,7 +141,7 @@ int main(int argc, char const *argv[])
 
     if(s)
     {
-        for(int j = 1; j < pre.size(); j++)
+        for(int j = 1; j < (int) pre.size(); j++)
         {
             if(pre[j] > 0)
             {
