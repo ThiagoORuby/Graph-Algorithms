@@ -2,12 +2,14 @@
 
 using namespace std;
 
+// Edge Struct
 struct Edge{
     int u, v, weight;
 
     Edge(int u, int v, int w) : u(u), v(v), weight(w){}
 };
 
+// Non-Directional Graph Struct
 struct Graph{
     int n, m;
     vector<Edge> edges;
@@ -21,12 +23,14 @@ struct Graph{
     }
 };
 
+// UnionFind Struct
 struct UnionFind
 {
 
     vector<int> parent;
     vector<int> rank;
 
+    // Constructor make sets for n elements
     UnionFind(int n){
         parent.resize(n + 1);
         rank.resize(n + 1, 0);
@@ -34,6 +38,7 @@ struct UnionFind
         for(int i = 1; i <= n; i++) parent[i] = i;
     }
 
+    // Find the parent
     int find(int x)
     {
         if (parent[x] != x)
@@ -42,6 +47,7 @@ struct UnionFind
         return parent[x];
     }
 
+    // Union the sets
     void unionSets(int x, int y)
     {
         int fx = find(x);
@@ -60,19 +66,23 @@ struct UnionFind
     }
 };
 
+// Compare the weights of two edges
 bool compare_weights(const Edge& a, const Edge& b) {
     return a.weight < b.weight;
 }
 
+// Kruskal Algorithm
 vector<Edge> kruskal(Graph g)
 {
+    // Initialize the MST and UnionFind
     vector<Edge> T;
     UnionFind uf(g.n);
 
+    // Sort the edges by the weigths
     vector<Edge> sortedEdges = g.edges;
-
     sort(sortedEdges.begin(), sortedEdges.end(), compare_weights);
 
+    // For each edge in sortedEdges, executes unionSets
     for(const Edge& e : sortedEdges)
     {
         if (uf.find(e.u) != uf.find(e.v))

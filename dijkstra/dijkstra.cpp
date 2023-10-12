@@ -5,6 +5,7 @@ using namespace std;
 typedef pair<int,int> edge;
 typedef vector<edge> edges;
 
+// Non-directional Graph Struct
 struct Graph{
     
     int n;
@@ -26,21 +27,28 @@ struct Graph{
     }
 };
 
+// Djikstra Algorithm
 vector<int> djikstra(Graph g, int v0)
 {
+    // Initialize the distance and previos vector
     vector<int> dist(g.n + 1, INT_MAX);
     vector<int> pre(g.n + 1, -1);
 
+    // Initialize the min priority queue
     priority_queue<edge, edges, greater<edge>> H;
 
+    // Set the v0 distance and push to the queue
     dist[v0] = 0;
     H.push(make_pair(dist[v0], v0));
 
+    // Execute the loop while the queue isn't empty
     while(!H.empty())
     {
+        // Get the first vector on the queue (minimal distance)
         int u = H.top().second;
         H.pop();
 
+        // For each neighbor, update minimal distance
         for(const edge &e : g.N(u))
         {
             int v = e.first;

@@ -5,6 +5,8 @@ using namespace std;
 typedef pair<int,int> edge;
 typedef vector<edge> edges;
 
+
+// Non-directional Graph Struct
 struct Graph{
 
     int n;
@@ -26,24 +28,31 @@ struct Graph{
     }
 };
 
+// Prim Algorithm
 pair<int, vector<int>> prim(Graph g, int v0)
 {
+    // Initialize the cost and visited, distance and previous vectors
     int cost = 0;
     vector<bool> visited(g.n + 1, false);
     vector<int> dist(g.n + 1, INT_MAX);
     vector<int> pre(g.n + 1, -1);
 
+    // Initialize the max priority queue
     priority_queue<edge, edges, greater<edge>> H;
 
+    // Set the v0 distance and push to the queue
     dist[v0] = 0;
     H.push(make_pair(dist[v0], v0));
 
+    // Execute the loop while the queue isn't empty
     while(!H.empty())
     {
+        // Get the first vector on the queue (minimal distance) and set has visited
         int u = H.top().second;
         H.pop();
         visited[u] = true;
 
+        // For each edge of u, updates the MST information by the distances
         for(const edge &e : g.N(u))
         {
             int v = e.first;
@@ -58,6 +67,7 @@ pair<int, vector<int>> prim(Graph g, int v0)
         }
     }
 
+    // Calc the cost
     for(int i = 1; i <= g.n; i++) cost += dist[i];
     
     return make_pair(cost, pre);
