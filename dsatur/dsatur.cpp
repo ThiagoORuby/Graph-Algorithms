@@ -64,7 +64,7 @@ struct maxSat
 
 
 // DSATUR Algorithm
-pair<int, vector<int>> DSATUR2(Graph g)
+pair<int, vector<int>> DSATUR(Graph g)
 {
     // Initialize color, degree e DSAT vectors
     vector<int> color(g.n + 1, -1), d(g.n + 1);
@@ -197,7 +197,7 @@ int main(int argc, char const *argv[])
 
     file.close();
 
-    result = DSATUR2(g);
+    result = DSATUR(g);
     crom = result.first;
     color = result.second;
 
